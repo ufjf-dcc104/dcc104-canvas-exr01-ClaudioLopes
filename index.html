@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Moon Lander</title>
+    <script src="Sprite.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <canvas></canvas>
+    <script>
+    var eCanvas = document.getElementsByTagName("canvas")[0];
+    var ctx = eCanvas.getContext("2d");
+    var actor = new Sprite();
+
+    var fps = 120;
+    var dt = - 1/fps;
+
+    var feel = 250;
+    var life = 3;
+
+    eCanvas.width = 1000;
+    eCanvas.height = 500;
+
+    desenha();
+
+    function desenha(){
+      requestAnimationFrame(desenha);
+      ctx.clearRect(0,0,eCanvas.width,eCanvas.height);
+      ctx.strokeRect(0,0,eCanvas.width,eCanvas.height);
+      ctx.strokeRect(750,350,250,1);
+
+      ctx.fillStyle = "green";
+      if(feel > 0){
+        ctx.fillText("Feel:"+feel, 300,10);
+        ctx.fillRect(350,5,feel,5);
+      }
+
+      actor.desenhar(ctx);
+      actor.mover(dt);
+
+      if(actor.x >= 750 && actor.y+15 > 350){
+        actor.win(actor.x,actor.y);
+      }
+
+      if(feel <= 0){
+        actor.x = 50;
+        actor.y = 50;
+        ctx.fillStyle = "red";
+        ctx.fillText("Feel: 0", 450,10);
+        if(life>0){
+          feel = 250;
+          life = life-1;
+        }
+      }
+
+      ctx.fillStyle = "black";
+      ctx.fillText("vidas:"+life,450,20);
+
+      if(actor.x > 1000 || actor.x < 0){
+        feel = feel-1;
+        actor.x = 50;
+        actor.y = 50;
+        actor.ax = 0;
+        actor.ay = 0;
+        feel = 250;
+      }
+      if(actor.y > 500 || actor.y < 0){
+        feel = feel-1;
+        actor.x = 10;
+        actor.y = 10;
+        actor.ax = 0;
+        actor.ay = 0;
+        feel = 250;
+      }
+    };
+
+    addEventListener("keydown", function(e){
+      switch (e.keyCode) {
+        case 37:
+            actor.ax = -60;
+            feel = feel-5;
+          break;
+        case 38:
+            actor.ay = -60;
+            feel = feel-5;
+          break;
+        case 39:
+            actor.ax = 60;
+            feel = feel-5;
+          break;
+          case 40:
+            actor.ay = 60;
+            feel = feel-5;
+            break;
+        default:
+      }
+    });
+
+    addEventListener("keyup", function(e){
+      switch (e.keyCode) {
+        case 37:
+          actor.ax = 0;
+          feel = feel-5;
+          break;
+        case 37:
+          actor.ay = 0;
+          feel = feel-5;
+          break;
+        case 37:
+          actor.ax = 0;
+          feel = feel-5;
+          break;
+        case 37:
+          actor.ay = 0;
+          feel = feel-5;
+          break;
+        default:
+      }
+    });
+    </script>
+  </body>
+</html>
