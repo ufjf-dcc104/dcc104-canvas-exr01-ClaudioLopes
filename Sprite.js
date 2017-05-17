@@ -13,10 +13,16 @@ function Sprite(){
 }
 
 Sprite.prototype.desenhar = function(ctx){
+  ctx.save();
+  ctx.translate(this.x, this.y);
   ctx.fillStyle = this.color;
-  ctx.fillRect(this.x,this.y, this.width, this.height);
+  ctx.fillRect(-this.width/2, -this.height/2,this.width,this.height);
+  ctx.fill();
   ctx.strokeStyle = "black";
-  ctx.strokeRect(this.x,this.y, this.width, this.height);
+  ctx.stroke();
+  ctx.strokeStyle = "grey";
+  ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
+  ctx.restore();
 };
 
 Sprite.prototype.mover = function(dt){
@@ -33,4 +39,6 @@ Sprite.prototype.win = function(x,y){
       this.vy = 0;
       this.ax = 0;
       this.ay = 0;
+      this.gravidade = 0;
+      this.vento = 0;
 };

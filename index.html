@@ -45,7 +45,7 @@
       actor.desenhar(ctx);
       actor.mover(dt);
       feel += actor.acelerando*25*dt;
-      if(actor.x >= 750 && actor.y+15 > 350){
+      if(actor.x >= 750 && actor.y+(15/2) > 350){
         actor.win(actor.x,actor.y);
       }
 
