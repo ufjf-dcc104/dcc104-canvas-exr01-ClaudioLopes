@@ -11,9 +11,12 @@
     var eCanvas = document.getElementsByTagName("canvas")[0];
     var ctx = eCanvas.getContext("2d");
     var actor = new Sprite();
+    actor.acelerando = 0;
 
     var fps = 120;
-    var dt = - 1/fps;
+    var dt = 1/fps;
+    var atual = new Date();
+    var anterior = new Date();
 
     var feel = 250;
     var life = 3;
@@ -25,6 +28,10 @@
 
     function desenha(){
       requestAnimationFrame(desenha);
+
+      atual = new Date();
+      dt = (atual - anterior)/1000;
+
       ctx.clearRect(0,0,eCanvas.width,eCanvas.height);
       ctx.strokeRect(0,0,eCanvas.width,eCanvas.height);
       ctx.strokeRect(750,350,250,1);
@@ -37,7 +44,7 @@
 
       actor.desenhar(ctx);
       actor.mover(dt);
-
+      feel += actor.acelerando*25*dt;
       if(actor.x >= 750 && actor.y+15 > 350){
         actor.win(actor.x,actor.y);
       }
@@ -62,6 +69,8 @@
         actor.y = 50;
         actor.ax = 0;
         actor.ay = 0;
+        actor.vento = 0;
+        actor.gravidade = 0;
         feel = 250;
       }
       if(actor.y > 500 || actor.y < 0){
@@ -70,26 +79,35 @@
         actor.y = 10;
         actor.ax = 0;
         actor.ay = 0;
+        actor.vento = 0;
+        actor.gravidade = 0;
         feel = 250;
       }
+
+      anterior = atual;
+
     };
 
     addEventListener("keydown", function(e){
       switch (e.keyCode) {
         case 37:
             actor.ax = -60;
+            actor.acelerando = 1;
             feel = feel-5;
           break;
         case 38:
             actor.ay = -60;
+            actor.acelerando = 1;
             feel = feel-5;
           break;
         case 39:
             actor.ax = 60;
+            actor.acelerando = 1;
             feel = feel-5;
           break;
           case 40:
             actor.ay = 60;
+            actor.acelerando = 1;
             feel = feel-5;
             break;
         default:
@@ -100,19 +118,23 @@
       switch (e.keyCode) {
         case 37:
           actor.ax = 0;
-          feel = feel-5;
+          actor.acelerando = 0;
+          //feel = feel-5;
           break;
-        case 37:
+        case 38:
           actor.ay = 0;
-          feel = feel-5;
+          actor.acelerando = 0;
+          //feel = feel-5;
           break;
-        case 37:
+        case 39:
           actor.ax = 0;
-          feel = feel-5;
+          actor.acelerando = 0;
+          //feel = feel-5;
           break;
-        case 37:
+        case 40:
           actor.ay = 0;
-          feel = feel-5;
+          actor.acelerando = 0;
+          //feel = feel-5;
           break;
         default:
       }

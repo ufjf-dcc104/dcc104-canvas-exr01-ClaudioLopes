@@ -9,7 +9,7 @@ function Sprite(){
   this.height = 15;
   this.color = "blue";
   this.gravidade = 10;
-  this.vento = 25;
+  this.vento = 20;
 }
 
 Sprite.prototype.desenhar = function(ctx){
